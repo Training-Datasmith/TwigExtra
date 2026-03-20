@@ -1,21 +1,21 @@
 #index:
 #    path: /
-#    controller: App\Controller\DefaultController::index
+#    controller: App\Controller\Default_Controller::index
 
 test_html_attribute:
     path: /test_html_attribute
-    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    controller: Symfony\Bundle\Framework_Bundle\Controller\Template_Controller
     defaults:
         template: 'test_html_attribute.html.twig'
 
 route_exists:
     path: /route_exists
-    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    controller: Symfony\Bundle\Framework_Bundle\Controller\Template_Controller
     defaults:
         template: 'route_exists.html.twig'
 
 sort_by:
     path: /sort_by
-    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    controller: Symfony\Bundle\Framework_Bundle\Controller\Template_Controller
     defaults:
         template: 'sort_by.html.twig'
