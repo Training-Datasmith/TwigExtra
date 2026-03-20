@@ -8,39 +8,31 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+declare (strict_types=1);
+namespace Sylius\Twig_Extra\Twig\Extension;
 
-declare(strict_types=1);
-
-namespace Sylius\TwigExtra\Twig\Extension;
-
-use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
-use Symfony\Component\Routing\Exception\RouteNotFoundException;
-use Symfony\Component\Routing\RouterInterface;
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFunction;
-
-final class RouteExistsExtension extends AbstractExtension
+use Symfony\Component\Routing\Exception\Missing_Mandatory_Parameters_Exception;
+use Symfony\Component\Routing\Exception\Route_Not_Found_Exception;
+use Symfony\Component\Routing\Router_Interface;
+use Twig\Extension\Abstract_Extension;
+use Twig\Twig_Function;
+final class Route_Exists_Extension extends Abstract_Extension
 {
-    public function __construct(private readonly RouterInterface $router)
+    public function __construct(private readonly Router_Interface $router)
     {
     }
-
-    public function getFunctions(): array
+    public function get_functions(): array
     {
-        return [
-            new TwigFunction('sylius_route_exists', $this->routeExists(...)),
-        ];
+        return [new Twig_Function('sylius_route_exists', $this->route_exists(...))];
     }
-
-    public function routeExists(string $routeName): bool
+    public function route_exists(string $route_name): bool
     {
         try {
-            $this->router->generate($routeName);
-
+            $this->router->generate($route_name);
             return true;
-        } catch (RouteNotFoundException) {
+        } catch (Route_Not_Found_Exception) {
             return false;
-        } catch (MissingMandatoryParametersException) {
+        } catch (Missing_Mandatory_Parameters_Exception) {
             return true;
         }
     }

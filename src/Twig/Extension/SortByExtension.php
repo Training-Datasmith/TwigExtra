@@ -8,25 +8,19 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+declare (strict_types=1);
+namespace Sylius\Twig_Extra\Twig\Extension;
 
-declare(strict_types=1);
-
-namespace Sylius\TwigExtra\Twig\Extension;
-
-use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
-use Symfony\Component\PropertyAccess\PropertyAccess;
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
-
-class SortByExtension extends AbstractExtension
+use Symfony\Component\Property_Access\Exception\No_Such_Property_Exception;
+use Symfony\Component\Property_Access\Property_Access;
+use Twig\Extension\Abstract_Extension;
+use Twig\Twig_Filter;
+class Sort_By_Extension extends Abstract_Extension
 {
-    public function getFilters(): array
+    public function get_filters(): array
     {
-        return [
-            new TwigFilter('sylius_sort_by', $this->sortBy(...)),
-        ];
+        return [new Twig_Filter('sylius_sort_by', $this->sort_by(...))];
     }
-
     /**
      * @param iterable<array<array-key, mixed>|object> $iterable
      *
@@ -34,41 +28,31 @@ class SortByExtension extends AbstractExtension
      *
      * @throws NoSuchPropertyException
      */
-    public function sortBy(iterable $iterable, string $field, string $order = 'ASC'): array
+    public function sort_by(iterable $iterable, string $field, string $order = 'ASC'): array
     {
-        $array = $this->transformIterableToArray($iterable);
-
-        usort(
-            $array,
-            function (array|object $firstElement, array|object $secondElement) use ($field, $order): int {
-                $accessor = PropertyAccess::createPropertyAccessor();
-
-                $firstProperty = (string) $accessor->getValue($firstElement, $field);
-                $secondProperty = (string) $accessor->getValue($secondElement, $field);
-
-                $result = strnatcasecmp($firstProperty, $secondProperty);
-                if ('DESC' === $order) {
-                    $result *= -1;
-                }
-
-                return $result;
-            },
-        );
-
+        $array = $this->transform_iterable_to_array($iterable);
+        usort($array, function (array|object $first_element, array|object $second_element) use ($field, $order): int {
+            $accessor = Property_Access::create_property_accessor();
+            $first_property = (string) $accessor->get_value($first_element, $field);
+            $second_property = (string) $accessor->get_value($second_element, $field);
+            $result = strnatcasecmp($first_property, $second_property);
+            if ('DESC' === $order) {
+                $result *= -1;
+            }
+            return $result;
+        });
         return $array;
     }
-
     /**
      * @param iterable<array<array-key, mixed>|object> $iterable
      *
      * @return array<array<array-key, mixed>|object>
      */
-    private function transformIterableToArray(iterable $iterable): array
+    private function transform_iterable_to_array(iterable $iterable): array
     {
         if (is_array($iterable)) {
             return $iterable;
         }
-
         return iterator_to_array($iterable);
     }
 }

@@ -8,13 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+declare (strict_types=1);
+namespace Sylius\Twig_Extra\Symfony;
 
-declare(strict_types=1);
-
-namespace Sylius\TwigExtra\Symfony;
-
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-
-final class SyliusTwigExtraBundle extends Bundle
+use Symfony\Component\Http_Kernel\Bundle\Bundle;
+final class Sylius_Twig_Extra_Bundle extends Bundle
 {
 }

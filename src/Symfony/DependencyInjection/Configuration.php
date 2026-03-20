@@ -8,52 +8,30 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+declare (strict_types=1);
+namespace Sylius\Twig_Extra\Symfony\Dependency_Injection;
 
-declare(strict_types=1);
-
-namespace Sylius\TwigExtra\Symfony\DependencyInjection;
-
-use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
-use Symfony\Component\Config\Definition\Builder\TreeBuilder;
-use Symfony\Component\Config\Definition\ConfigurationInterface;
-
-final class Configuration implements ConfigurationInterface
+use Symfony\Component\Config\Definition\Builder\Array_Node_Definition;
+use Symfony\Component\Config\Definition\Builder\Tree_Builder;
+use Symfony\Component\Config\Definition\Configuration_Interface;
+final class Configuration implements Configuration_Interface
 {
-    public function getConfigTreeBuilder(): TreeBuilder
+    public function get_config_tree_builder(): Tree_Builder
     {
-        $treeBuilder = new TreeBuilder('sylius_twig_extra');
-
-        $rootNode = $treeBuilder->getRootNode();
-
-        $this->addTwigUxConfiguration($rootNode);
-
-        return $treeBuilder;
+        $tree_builder = new Tree_Builder('sylius_twig_extra');
+        $root_node = $tree_builder->get_root_node();
+        $this->add_twig_ux_configuration($root_node);
+        return $tree_builder;
     }
-
-    private function addTwigUxConfiguration(ArrayNodeDefinition $rootNode): void
+    private function add_twig_ux_configuration(Array_Node_Definition $root_node): void
     {
-        $rootNode
-            ->children()
-                ->arrayNode('twig_ux')
-                    ->children()
-                        ->arrayNode('anonymous_component_template_prefixes')
-                            ->useAttributeAsKey('prefix_name')
-                                ->validate()
-                                    ->always(static function ($values): array {
-                                        foreach ($values as $path) {
-                                            if (!is_string($path)) {
-                                                throw new \InvalidArgumentException(sprintf('Path must be a string. "%s" given.', get_debug_type($path)));
-                                            }
-                                        }
-
-                                        return $values;
-                                    })
-                                ->end()
-                            ->scalarPrototype()->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end()
-        ;
+        $root_node->children()->array_node('twig_ux')->children()->array_node('anonymous_component_template_prefixes')->use_attribute_as_key('prefix_name')->validate()->always(static function ($values): array {
+            foreach ($values as $path) {
+                if (!is_string($path)) {
+                    throw new \InvalidArgumentException(sprintf('Path must be a string. "%s" given.', get_debug_type($path)));
+                }
+            }
+            return $values;
+        })->end()->scalar_prototype()->end()->end()->end()->end()->end();
     }
 }
