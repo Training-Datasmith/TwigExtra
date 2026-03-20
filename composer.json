@@ -35,13 +35,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Sylius\\TwigExtra\\": "src/"
+            "Sylius\\Twig_Extra\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "TestApplication\\Sylius\\TwigExtra\\": "tests/Functional/.application/src/",
-            "Tests\\Sylius\\TwigExtra\\": "tests/"
+            "Test_Application\\Sylius\\Twig_Extra\\": "tests/Functional/.application/src/",
+            "Tests\\Sylius\\Twig_Extra\\": "tests/"
         }
     },
     "config": {
